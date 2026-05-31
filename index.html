@@ -607,14 +607,21 @@ input:focus-visible + .toggle-track { outline: 2px solid var(--orange); outline-
 body.pref-kbd-hints .kbd-hint { display: inline; }
 
 /* ─── AI Assistant ──────────────────────────────────────── */
+/* ─── AI Learning Assistant panel ───────────────────────
+   Collapse/expand: the panel has two visual states.
+   Expanded (default): full card with message + actions.
+   Collapsed: single compact bar showing identity only.
+   Transition uses max-height + opacity for smoothness.
+───────────────────────────────────────────────────────── */
 .ai-welcome {
   background: var(--black);
   border-radius: var(--radius-lg);
-  padding: 18px 20px;
+  padding: 0;               /* padding handled per region */
   margin-bottom: 16px;
   color: var(--white);
   position: relative;
   overflow: hidden;
+  transition: border-radius var(--transition);
 }
 .ai-welcome::before {
   content: '';
@@ -624,86 +631,124 @@ body.pref-kbd-hints .kbd-hint { display: inline; }
   background: var(--green);
   border-radius: 50%;
   opacity: 0.15;
+  pointer-events: none;
 }
+
+/* Header row — always visible */
 .ai-welcome-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
+  padding: 14px 16px;
+  cursor: default;
+  position: relative;
+  z-index: 1;
 }
 .ai-avatar {
-  width: 32px; height: 32px;
+  width: 30px; height: 30px;
   background: var(--green);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 .ai-welcome-meta {
   display: flex;
   flex-direction: column;
   gap: 1px;
+  flex: 1;
 }
 .ai-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--green-light);
   letter-spacing: 0.3px;
 }
 .ai-status {
   font-size: 10px;
-  color: #A9A6A6;
-}
-.ai-welcome-msg {
-  font-size: 14px;
-  line-height: 1.7;
-  color: #D0D0D0;
-  margin-bottom: 12px;
-  margin-top: 12px;
-}
-.ai-welcome-msg strong { color: var(--white); font-weight: 600; }
-.ai-caps-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.ai-cap {
-  font-size: 14px;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: 20px;
-  background: #1A1A1A;
-  border: 1px solid #333;
-  color: #CCC;
+  color: #888;
 }
 
-.ai-bar {
+/* Collapse toggle button */
+.ai-collapse-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: color var(--transition), background var(--transition);
+  display: flex; align-items: center; justify-content: center;
+}
+.ai-collapse-btn:hover { color: #CCC; background: rgba(255,255,255,0.08); }
+.ai-collapse-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+/* Collapsible body — wraps message + actions */
+.ai-body {
+  max-height: 600px;          /* large enough for any content */
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  padding: 0 16px 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Collapsed state applied to the panel wrapper */
+.ai-welcome.collapsed .ai-body {
+  max-height: 0;
+  opacity: 0;
+  padding-bottom: 0;
+}
+.ai-welcome.collapsed .ai-welcome-header {
+  padding-bottom: 14px; /* keep header height stable */
+}
+
+/* Welcome message */
+.ai-welcome-msg {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #C8C8C8;
+  margin-bottom: 14px;
+}
+.ai-welcome-msg strong { color: var(--white); font-weight: 600; }
+
+/* 4 primary action buttons — inside the panel */
+.ai-actions {
   display: flex;
-  gap: 6px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  gap: 7px;
+  margin-bottom: 0;
 }
 .ai-action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 14px;
+  gap: 6px;
+  font-size: 12px;
   font-weight: 600;
-  padding: 7px 14px;
-  border: 1.5px solid var(--border);
+  padding: 6px 13px;
+  border: 1px solid rgba(255,255,255,0.15);
   border-radius: 20px;
-  background: var(--white);
-  color: var(--text);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.85);
   cursor: pointer;
   transition: all var(--transition);
+  white-space: nowrap;
 }
 .ai-action-btn:hover {
-  border-color: var(--green);
-  color: var(--green);
-  background: var(--accent-bg);
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.3);
+  color: var(--white);
 }
 .ai-action-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.ai-action-btn .kbd-hint {
+  font-size: 10px; font-weight: 500; opacity: 0.5; margin-left: 2px;
+}
 
+/* AI Response area */
 .ai-response {
   background: var(--white);
   border: 1.5px solid var(--border);
@@ -715,7 +760,7 @@ body.pref-kbd-hints .kbd-hint { display: inline; }
 }
 .ai-response.show { display: block; }
 .ai-resp-header {
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -723,7 +768,7 @@ body.pref-kbd-hints .kbd-hint { display: inline; }
   margin-bottom: 8px;
 }
 .ai-resp-body {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.7;
   color: var(--text);
   white-space: pre-wrap;
@@ -1167,26 +1212,12 @@ code {
 }
 body.pref-reduced-motion .typing-dots span { animation: none; opacity: 1; transform: scale(1); }
 
-.ai-suggested {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
-}
-.ai-suggestion-btn {
-  font-size: 14px; font-weight: 500; padding: 5px 12px;
-  border-radius: 20px; border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.8);
-  cursor: pointer; transition: all var(--transition);
-}
-.ai-suggestion-btn:hover {
-  background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3);
-  color: var(--white);
-}
-.ai-suggestion-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
-
+/* Low-energy note — shown when Reduce Distractions pref is on */
 .ai-low-energy-note {
   display: none;
-  font-size: 14px; color: rgba(255,255,255,0.5);
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  padding: 6px 12px; border-radius: 6px; margin-top: 10px; font-style: italic;
+  font-size: 11px; color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  padding: 5px 10px; border-radius: 6px; margin-top: 10px; font-style: italic;
 }
 body.pref-reduced-motion .ai-low-energy-note { display: block; }
 </style>
@@ -1451,45 +1482,72 @@ body.pref-reduced-motion .ai-low-energy-note { display: block; }
           the system is working, even at simulated latency
       -->
       <!-- AI Welcome (role-adaptive) -->
-      <div class="ai-welcome" id="ai-welcome" aria-label="AI Learning Assistant introduction">
+      <!--
+        AI LEARNING ASSISTANT
+        ─────────────────────────────────────────────────────────
+        Design intent: The AI assistant is scoped to the lesson — it
+        doesn't wander into general chat. Its purpose is to reduce the
+        cognitive cost of switching between reading and doing.
+
+        Collapse behaviour: learners can minimise the panel to a single
+        compact bar once they've oriented, freeing vertical space for
+        lesson content without losing quick access to the assistant.
+
+        Action set: 4 clear, non-overlapping intents —
+          Explain simply · Show example · Generate code · Summarize
+        One row, no duplicates, easy to scan.
+      -->
+      <div class="ai-welcome" id="ai-welcome" aria-label="AI Learning Assistant">
+
+        <!-- Always-visible header row -->
         <div class="ai-welcome-header">
           <div class="ai-avatar" aria-hidden="true">✦</div>
           <div class="ai-welcome-meta">
             <div class="ai-name">AI Learning Assistant</div>
             <div class="ai-status">● Active · Lesson-scoped</div>
           </div>
+          <button
+            class="ai-collapse-btn"
+            id="ai-collapse-btn"
+            onclick="toggleAiPanel()"
+            aria-expanded="true"
+            aria-controls="ai-panel-body"
+            aria-label="Collapse AI Learning Assistant"
+            title="Collapse panel"
+          >⌃</button>
         </div>
-        <div class="ai-welcome-msg" id="ai-welcome-msg">
-          <!-- filled by JS -->
+
+        <!-- Collapsible body -->
+        <div class="ai-body" id="ai-panel-body">
+          <div class="ai-welcome-msg" id="ai-welcome-msg">
+            <!-- filled by JS based on selected role -->
+          </div>
+
+          <!-- 4 primary actions — consolidated, no duplicates -->
+          <div class="ai-actions" role="group" aria-label="AI actions">
+            <button class="ai-action-btn" onclick="aiAct('explain')" aria-label="Explain this simply">
+              💬 Explain simply <span class="kbd-hint">Alt+E</span>
+            </button>
+            <button class="ai-action-btn" onclick="aiAct('example')" aria-label="Show a real-world example">
+              💡 Show example <span class="kbd-hint">Alt+X</span>
+            </button>
+            <button class="ai-action-btn" onclick="aiAct('code')" aria-label="Generate accessible code">
+              💻 Generate code <span class="kbd-hint">Alt+C</span>
+            </button>
+            <button class="ai-action-btn" onclick="aiAct('summarize')" aria-label="Summarize this section">
+              📋 Summarize <span class="kbd-hint">Alt+S</span>
+            </button>
+          </div>
+
+          <!-- Shown when Reduce Distractions pref is enabled -->
+          <div class="ai-low-energy-note" role="note" aria-live="polite">
+            ⚡ Low-energy mode — responses will be shorter and easier to scan.
+          </div>
         </div>
-        <div class="ai-caps-list" aria-label="Assistant capabilities">
-          <span class="ai-cap">💬 Explain differently</span>
-          <span class="ai-cap">📋 Summarize content</span>
-          <span class="ai-cap">💡 Generate examples</span>
-          <span class="ai-cap">💻 Create code snippets</span>
-        </div>
-        <!-- Suggested prompts — clickable shortcuts to common AI actions -->
-        <div class="ai-suggested" role="group" aria-label="Suggested prompts">
-          <button class="ai-suggestion-btn" onclick="aiAct('explain')">Explain this simply</button>
-          <button class="ai-suggestion-btn" onclick="aiAct('example')">Show real-world example</button>
-          <button class="ai-suggestion-btn" onclick="aiAct('code')">Generate accessible code</button>
-          <button class="ai-suggestion-btn" onclick="aiAct('summarize')">Summarize for my team</button>
-        </div>
-        <!-- Shown when Reduce Distractions is enabled -->
-        <div class="ai-low-energy-note" role="note" aria-live="polite">
-          ⚡ Low-energy mode — responses will be shorter and easier to scan.
-        </div>
+
       </div>
 
-      <!-- AI Action Bar -->
-      <div class="ai-bar" role="toolbar" aria-label="AI learning tools">
-        <button class="ai-action-btn" onclick="aiAct('explain')" aria-label="Explain this section differently">💬 Explain differently <span class="kbd-hint">Alt+E</span></button>
-        <button class="ai-action-btn" onclick="aiAct('summarize')" aria-label="Summarize this section">📋 Summarize <span class="kbd-hint">Alt+S</span></button>
-        <button class="ai-action-btn" onclick="aiAct('example')" aria-label="Show a real-world example">💡 Show example <span class="kbd-hint">Alt+X</span></button>
-        <button class="ai-action-btn" onclick="aiAct('code')" aria-label="Generate code snippet">💻 Generate code <span class="kbd-hint">Alt+C</span></button>
-      </div>
-
-      <!-- AI Response -->
+      <!-- AI Response area — sits between panel and lesson content -->
       <div class="ai-response" id="ai-box" aria-live="polite">
         <div class="ai-resp-header">✦ AI Response</div>
         <div class="ai-resp-body" id="ai-text"></div>
@@ -1822,8 +1880,18 @@ function setRole(r, btn) {
   // Update badge
   document.getElementById('role-badge').textContent = roles[r].icon + ' ' + roles[r].label;
 
-  // Update AI welcome
+  // Update AI welcome — also re-expand panel so new message is visible
   renderAiWelcome();
+  var panel = document.getElementById('ai-welcome');
+  var colBtn = document.getElementById('ai-collapse-btn');
+  if (panel && panel.classList.contains('collapsed')) {
+    panel.classList.remove('collapsed');
+    if (colBtn) {
+      colBtn.setAttribute('aria-expanded','true');
+      colBtn.setAttribute('aria-label','Collapse AI Learning Assistant');
+      colBtn.textContent = '⌃';
+    }
+  }
 
   // Update intro role block
   renderIntroRoleBlock();
@@ -2052,6 +2120,29 @@ function toggleChk(el) {
 /* ════════════════════════════════════════════════════════
    KEYBOARD SHORTCUTS (when kbd hints enabled)
 ════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════
+   AI PANEL — COLLAPSE / EXPAND
+   ─────────────────────────────────────────────────────────
+   The panel is expanded by default. Clicking the chevron
+   collapses the body via max-height + opacity transition,
+   reducing visual weight while keeping the header (and
+   therefore the assistant's identity) always visible.
+
+   aria-expanded on the toggle button communicates state to
+   assistive technology. The chevron flips: ⌃ = expanded,
+   ⌄ = collapsed.
+════════════════════════════════════════════════════════ */
+function toggleAiPanel() {
+  var panel = document.getElementById('ai-welcome');
+  var btn   = document.getElementById('ai-collapse-btn');
+  var isCollapsed = panel.classList.toggle('collapsed');
+
+  btn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+  btn.setAttribute('aria-label', isCollapsed ? 'Expand AI Learning Assistant' : 'Collapse AI Learning Assistant');
+  btn.setAttribute('title',      isCollapsed ? 'Expand panel' : 'Collapse panel');
+  btn.textContent = isCollapsed ? '⌄' : '⌃';
+}
+
 document.addEventListener('keydown', function(e) {
   if (e.altKey) {
     if (e.key === 'e' || e.key === 'E') { e.preventDefault(); aiAct('explain'); }
