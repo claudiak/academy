@@ -29,6 +29,7 @@
 
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="favicon.png">
 <title>wA11y Academy — Accessible Buttons 101</title>
 <style>
@@ -38,8 +39,8 @@
   --green:       #01553B;
   --green-light: #C9D284;
   --sand:        #EFE6DD;
-  --orange:      #964801;
-  --orange-light:#FFD3AB;
+  --orange:      #9D4A01;
+  --orange-light:#FBDA98;
   --red:         #C91731;
   --rose-light:  #EAD0D0;
   --teal:        #1CAAA3;
@@ -607,21 +608,14 @@ input:focus-visible + .toggle-track { outline: 2px solid var(--orange); outline-
 body.pref-kbd-hints .kbd-hint { display: inline; }
 
 /* ─── AI Assistant ──────────────────────────────────────── */
-/* ─── AI Learning Assistant panel ───────────────────────
-   Collapse/expand: the panel has two visual states.
-   Expanded (default): full card with message + actions.
-   Collapsed: single compact bar showing identity only.
-   Transition uses max-height + opacity for smoothness.
-───────────────────────────────────────────────────────── */
 .ai-welcome {
   background: var(--black);
   border-radius: var(--radius-lg);
-  padding: 0;               /* padding handled per region */
+  padding: 18px 20px;
   margin-bottom: 16px;
   color: var(--white);
   position: relative;
   overflow: hidden;
-  transition: border-radius var(--transition);
 }
 .ai-welcome::before {
   content: '';
@@ -631,124 +625,86 @@ body.pref-kbd-hints .kbd-hint { display: inline; }
   background: var(--green);
   border-radius: 50%;
   opacity: 0.15;
-  pointer-events: none;
 }
-
-/* Header row — always visible */
 .ai-welcome-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 16px;
-  cursor: default;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 10px;
 }
 .ai-avatar {
-  width: 30px; height: 30px;
+  width: 32px; height: 32px;
   background: var(--green);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   flex-shrink: 0;
 }
 .ai-welcome-meta {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  flex: 1;
 }
 .ai-name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--green-light);
   letter-spacing: 0.3px;
 }
 .ai-status {
   font-size: 10px;
-  color: #888;
+  color: #A9A6A6;
 }
-
-/* Collapse toggle button */
-.ai-collapse-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #666;
-  font-size: 16px;
-  line-height: 1;
-  padding: 4px 6px;
-  border-radius: 4px;
-  flex-shrink: 0;
-  transition: color var(--transition), background var(--transition);
-  display: flex; align-items: center; justify-content: center;
-}
-.ai-collapse-btn:hover { color: #CCC; background: rgba(255,255,255,0.08); }
-.ai-collapse-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
-
-/* Collapsible body — wraps message + actions */
-.ai-body {
-  max-height: 600px;          /* large enough for any content */
-  opacity: 1;
-  overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.25s ease;
-  padding: 0 16px 16px;
-  position: relative;
-  z-index: 1;
-}
-
-/* Collapsed state applied to the panel wrapper */
-.ai-welcome.collapsed .ai-body {
-  max-height: 0;
-  opacity: 0;
-  padding-bottom: 0;
-}
-.ai-welcome.collapsed .ai-welcome-header {
-  padding-bottom: 14px; /* keep header height stable */
-}
-
-/* Welcome message */
 .ai-welcome-msg {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.7;
-  color: #C8C8C8;
-  margin-bottom: 14px;
+  color: #D0D0D0;
+  margin-bottom: 12px;
+  margin-top: 12px;
 }
 .ai-welcome-msg strong { color: var(--white); font-weight: 600; }
-
-/* 4 primary action buttons — inside the panel */
-.ai-actions {
+.ai-caps-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-bottom: 0;
+  gap: 6px;
+}
+.ai-cap {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #1A1A1A;
+  border: 1px solid #333;
+  color: #CCC;
+}
+
+.ai-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 .ai-action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  gap: 5px;
+  font-size: 14px;
   font-weight: 600;
-  padding: 6px 13px;
-  border: 1px solid rgba(255,255,255,0.15);
+  padding: 7px 14px;
+  border: 1.5px solid var(--border);
   border-radius: 20px;
-  background: rgba(255,255,255,0.07);
-  color: rgba(255,255,255,0.85);
+  background: var(--white);
+  color: var(--text);
   cursor: pointer;
   transition: all var(--transition);
-  white-space: nowrap;
 }
 .ai-action-btn:hover {
-  background: rgba(255,255,255,0.15);
-  border-color: rgba(255,255,255,0.3);
-  color: var(--white);
+  border-color: var(--green);
+  color: var(--green);
+  background: var(--accent-bg);
 }
 .ai-action-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
-.ai-action-btn .kbd-hint {
-  font-size: 10px; font-weight: 500; opacity: 0.5; margin-left: 2px;
-}
 
-/* AI Response area */
 .ai-response {
   background: var(--white);
   border: 1.5px solid var(--border);
@@ -760,7 +716,7 @@ body.pref-kbd-hints .kbd-hint { display: inline; }
 }
 .ai-response.show { display: block; }
 .ai-resp-header {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -768,7 +724,7 @@ body.pref-kbd-hints .kbd-hint { display: inline; }
   margin-bottom: 8px;
 }
 .ai-resp-body {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.7;
   color: var(--text);
   white-space: pre-wrap;
@@ -782,7 +738,7 @@ body.pref-kbd-hints .kbd-hint { display: inline; }
 }
 .badge-role { background: var(--accent-bg); color: var(--green); border-color: var(--accent-border); }
 .badge-neutral { background: var(--surface); color: var(--text-muted); border-color: var(--border); }
-.badge-orange { background: var(--orange-light); color: #7A3800; border-color: #F0B070; }
+.badge-orange { background: var(--orange-light); color: #9D4A01; border-color: #FBDA98; }
 
 .lesson-title {
   font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
@@ -813,7 +769,7 @@ code {
 }
 .tip { background: var(--accent-bg); border-color: var(--accent-border); color: #014028; }
 .tip .callout-head { color: var(--green); }
-.warn { background: var(--orange-light); border-color: #F0A060; color: #7A3800; }
+.warn { background: var(--orange-light); border-color: #F0A060; color: #9D4A01; }
 .warn .callout-head { color: var(--orange); }
 .info { background: #E8EEF8; border-color: #AABCD8; color: #0D2A5A; }
 .info .callout-head { color: var(--indigo); }
@@ -863,10 +819,10 @@ code {
 .tab {
   padding: 8px 16px; font-size: 14px; font-weight: 500; color: var(--text-muted);
   cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px;
-  white-space: nowrap; transition: all var(--transition);
+  white-space: nowrap; transition: all var(--transition); border-radius: 20px 20px 0 0;
 }
-.tab:hover { color: var(--text); }
-.tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 700; }
+.tab:hover { color: var(--black;); font-weight: 600; }
+.tab.active { color: var(--white); background-color: var(--green); border-bottom-color: var(--green); font-weight: 700; }
 .tab:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
@@ -987,12 +943,326 @@ code {
 .complete-banner h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
 .complete-banner p { color: rgba(255,255,255,0.85); margin: 0; font-size: 14px; }
 
-/* ─── Responsive ────────────────────────────────────────── */
-@media (max-width: 640px) {
-  #lesson-app.visible { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
-  .ob-role-grid, .ob-mode-grid, .ob-prefs-grid { grid-template-columns: 1fr; }
-  .prefs-grid, .grid2 { grid-template-columns: 1fr; }
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE SYSTEM
+   ───────────────────────────────────────────────────────
+   Mobile-first breakpoints:
+     — Mobile:  < 768px
+     — Tablet:  768px – 1024px
+     — Desktop: > 1024px (existing layout, unchanged)
+
+   Mobile strategy:
+     - Sidebar collapses to a slide-in drawer triggered by
+       a hamburger button in a sticky top bar
+     - Drawer overlay closes on tap outside or Escape key
+     - All grids collapse to single column
+     - Padding/spacing scaled down for small viewports
+     - Buttons/chips wrap naturally (already flex-wrap)
+     - Touch targets minimum 44px height
+     - No horizontal overflow (overflow-x: hidden on body)
+═══════════════════════════════════════════════════════ */
+
+/* ─── Prevent horizontal overflow globally ───────────── */
+html, body { overflow-x: hidden; max-width: 100%; }
+
+/* ─── Mobile top bar (hidden on desktop) ─────────────── */
+.mobile-topbar {
+  display: none;
+  position: sticky;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  background: var(--black);
+  padding: 0 16px;
+  height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #222;
+  flex-shrink: 0;
+}
+.mobile-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mobile-topbar-brand img {
+  width: 28px; height: 28px;
+  border-radius: 5px;
+  background: #fff;
+  padding: 1px;
+}
+.mobile-topbar-brand-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.3px;
+}
+.mobile-topbar-brand-name span { color: #C91731; }
+
+/* Progress mini bar */
+.mobile-topbar-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+  padding: 0 12px;
+}
+.mobile-prog-track {
+  height: 3px;
+  background: #333;
+  border-radius: 2px;
+  overflow: hidden;
+  flex: 1;
+  max-width: 80px;
+}
+.mobile-prog-fill {
+  height: 100%;
+  background: var(--green-light);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.mobile-prog-pct {
+  font-size: 11px;
+  color: #888;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Hamburger button */
+.mobile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  background: none;
+  border: 1px solid #333;
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--white);
+  font-size: 18px;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+.mobile-menu-btn:hover { background: #1A1A1A; border-color: #555; }
+.mobile-menu-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+/* ─── Drawer overlay ─────────────────────────────────── */
+.drawer-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(0,0,0,0.65);
+}
+.drawer-overlay.open { display: block; }
+
+/* ─── Sidebar drawer (mobile) ────────────────────────── */
+.sidebar {
+  /* base drawer positioning — overridden on desktop */
+}
+
+/* ═══════════════════════════════════════════════════════
+   TABLET: 768px – 1024px
+   Narrow sidebar, comfortable content area
+═══════════════════════════════════════════════════════ */
+@media (min-width: 768px) and (max-width: 1024px) {
+  #lesson-app.visible {
+    grid-template-columns: 200px 1fr;
+  }
+  .main-inner {
+    padding: 22px 24px;
+  }
+  .ob-inner {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+  .ob-headline { font-size: 26px; }
+  .ob-card { padding: 22px 20px; }
+  .ob-role-grid { grid-template-columns: 1fr 1fr; }
+  .ob-mode-grid { grid-template-columns: repeat(3, 1fr); }
+  .ob-prefs-grid { grid-template-columns: 1fr 1fr; }
+  .prefs-grid { grid-template-columns: 1fr 1fr; }
+  .grid2 { grid-template-columns: 1fr 1fr; }
+  .cs-inner { max-width: 100%; }
+  .cs-cta-row { flex-direction: row; }
+  .cs-hero { padding: 28px 24px 22px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE: < 768px
+   Drawer nav, single-column, full-width everything
+═══════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* Show mobile top bar */
+  .mobile-topbar { display: flex; }
+
+  /* Lesson app: single column, topbar + scrollable main */
+  #lesson-app.visible {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Desktop sidebar hidden — becomes a drawer */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: min(280px, 85vw);
+    height: 100dvh;
+    z-index: 70;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    /* keep existing black background and styles */
+  }
+  .sidebar.drawer-open {
+    transform: translateX(0);
+  }
+  body.pref-reduced-motion .sidebar {
+    transition: none;
+  }
+
+  /* Main area: take remaining height, scroll internally */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0; /* required for flex child to scroll */
+  }
+  .main-inner {
+    padding: 20px 16px 40px;
+    max-width: 100%;
+  }
+
+  /* ── Onboarding ──────────────────────────────────── */
+  #onboarding {
+    padding: 32px 16px;
+    justify-content: flex-start;
+  }
+  .ob-inner { padding: 0; }
+  .ob-brand { margin-bottom: 24px; }
+  .ob-headline { font-size: 24px; letter-spacing: -0.5px; }
+  .ob-sub { font-size: 14px; margin-bottom: 24px; }
+  .ob-card { padding: 20px 16px; border-radius: var(--radius-lg); }
+  .ob-role-grid { grid-template-columns: 1fr; gap: 8px; }
+  .ob-mode-grid { grid-template-columns: 1fr; gap: 8px; }
+  .ob-prefs-grid { grid-template-columns: 1fr; gap: 8px; }
+  .ob-role-btn { padding: 14px 12px; min-height: 52px; }
+  .ob-mode-btn {
+    flex-direction: row;
+    text-align: left;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 14px 12px;
+    min-height: 52px;
+  }
+  .ob-mode-icon { font-size: 20px; flex-shrink: 0; }
+  .ob-mode-name { font-size: 14px; }
+  .ob-mode-time { font-size: 12px; }
+  .ob-pref-check { min-height: 48px; }
+  .ob-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ob-start-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+  .ob-skip { text-align: center; padding: 8px 0; }
+
+  /* ── Lesson header ───────────────────────────────── */
+  .lesson-title { font-size: 20px; }
+  .lesson-intro { font-size: 14px; }
+
+  /* ── AI Assistant ────────────────────────────────── */
+  .ai-welcome-msg { font-size: 13px; }
+  .ai-action-btn { font-size: 12px; padding: 8px 12px; min-height: 40px; }
+  .ai-caps-list { gap: 5px; }
+  .ai-cap { font-size: 12px; }
+  .ai-suggestion-btn { font-size: 12px; padding: 7px 10px; min-height: 38px; }
+  .ai-resp-body { font-size: 13px; }
+
+  /* ── Prefs panel ─────────────────────────────────── */
+  .prefs-grid { grid-template-columns: 1fr; gap: 8px; }
+  .pref-toggle-item { padding: 12px; min-height: 52px; }
+  .pref-toggle-name { font-size: 14px; }
+  .pref-toggle-desc { font-size: 12px; }
+
+  /* ── Anatomy / buttons demo ──────────────────────── */
+  .btn-row { gap: 12px; }
+  .btn-demo { padding: 12px 18px; min-height: 44px; }
+
+  /* ── Code blocks ─────────────────────────────────── */
+  .code-body { font-size: 12px; padding: 12px; }
+
+  /* ── Tabs ────────────────────────────────────────── */
+  .tabs { gap: 0; }
+  .tab { padding: 8px 12px; font-size: 13px; }
+
+  /* ── Grid cards ──────────────────────────────────── */
+  .grid2 { grid-template-columns: 1fr; }
+
+  /* ── Callouts ────────────────────────────────────── */
+  .callout { padding: 12px; }
+
+  /* ── Quiz ────────────────────────────────────────── */
+  .quiz-hd { padding: 12px 14px; }
+  .quiz-opts { padding: 12px 14px; gap: 8px; }
+  .qo { padding: 12px; min-height: 48px; font-size: 14px; }
+  .qo-ind { width: 24px; height: 24px; font-size: 11px; flex-shrink: 0; }
+  .quiz-fb { padding: 12px 14px; font-size: 13px; }
+
+  /* ── Next / CTA buttons ──────────────────────────── */
+  .next-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+
+  /* ── Role banner ─────────────────────────────────── */
+  .role-banner { padding: 10px 12px; gap: 10px; }
+  .role-banner-icon { font-size: 18px; }
+  .role-banner-text { font-size: 13px; }
+
+  /* ── Completion screen ───────────────────────────── */
+  #completion-screen { padding: 24px 16px 48px; }
+  .cs-inner { max-width: 100%; }
+  .cs-hero { padding: 24px 20px 20px; border-radius: var(--radius-lg); }
+  .cs-title { font-size: 18px; }
+  .cs-subtitle { font-size: 13px; }
+  .cs-card { padding: 18px 16px; }
+  .cs-cta-row { flex-direction: column; gap: 10px; }
+  .cs-btn-primary,
+  .cs-btn-secondary { min-width: unset; width: 100%; padding: 14px 20px; font-size: 14px; }
+  .cs-btn-ghost { padding: 12px 16px; }
+  .cs-next-lesson { padding: 12px 14px; gap: 10px; }
+
+  /* ── Checklist modal ─────────────────────────────── */
+  .modal-overlay { padding: 0; align-items: flex-end; }
+  .modal-box {
+    max-width: 100%;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    max-height: 90dvh;
+  }
+  .modal-header { padding: 16px 20px 14px; }
+  .modal-body { padding: 16px 20px; }
+  .modal-footer { padding: 14px 20px; }
+  .cl-item { padding: 10px 0; }
+  .cl-check { width: 24px; height: 24px; flex-shrink: 0; }
+  .cl-text { font-size: 13px; }
+}
+
+/* ── Small mobile (320–374px) extra tightening ─────── */
+@media (max-width: 374px) {
+  .ob-headline { font-size: 22px; }
+  .lesson-title { font-size: 18px; }
+  .main-inner { padding: 16px 14px 36px; }
+  .ai-action-btn { font-size: 11px; padding: 7px 10px; }
+  .tab { padding: 7px 10px; font-size: 12px; }
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -1212,12 +1482,26 @@ code {
 }
 body.pref-reduced-motion .typing-dots span { animation: none; opacity: 1; transform: scale(1); }
 
-/* Low-energy note — shown when Reduce Distractions pref is on */
+.ai-suggested {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
+}
+.ai-suggestion-btn {
+  font-size: 14px; font-weight: 500; padding: 5px 12px;
+  border-radius: 20px; border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.8);
+  cursor: pointer; transition: all var(--transition);
+}
+.ai-suggestion-btn:hover {
+  background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3);
+  color: var(--white);
+}
+.ai-suggestion-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
 .ai-low-energy-note {
   display: none;
-  font-size: 11px; color: rgba(255,255,255,0.45);
-  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-  padding: 5px 10px; border-radius: 6px; margin-top: 10px; font-style: italic;
+  font-size: 14px; color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  padding: 6px 12px; border-radius: 6px; margin-top: 10px; font-style: italic;
 }
 body.pref-reduced-motion .ai-low-energy-note { display: block; }
 </style>
@@ -1350,9 +1634,45 @@ body.pref-reduced-motion .ai-low-energy-note { display: block; }
 ═══════════════════════════════════════════════════════ -->
 <div id="lesson-app" role="main" aria-label="wA11y Academy lesson">
 
+  <!-- ── MOBILE TOP BAR ─────────────────────────────────────
+       Visible only on mobile (<768px). Shows brand, progress,
+       and hamburger to open the drawer navigation.
+  ──────────────────────────────────────────────────────── -->
+  <div class="mobile-topbar" id="mobile-topbar" aria-label="Mobile navigation bar">
+    <div class="mobile-topbar-brand">
+      <img src="favicon.png" alt="wA11y Academy logo" width="28" height="28">
+      <span class="mobile-topbar-brand-name">w<span>A</span>11y</span>
+    </div>
+    <div class="mobile-topbar-progress" aria-hidden="true">
+      <div class="mobile-prog-track">
+        <div class="mobile-prog-fill" id="mobile-pbar" style="width:20%"></div>
+      </div>
+      <span class="mobile-prog-pct" id="mobile-pct">20%</span>
+    </div>
+    <button
+      class="mobile-menu-btn"
+      id="mobile-menu-btn"
+      onclick="openDrawer()"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="sidebar"
+    >☰</button>
+  </div>
+
+  <!-- Overlay behind drawer — tap to close -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()" aria-hidden="true"></div>
+
   <!-- SIDEBAR -->
-  <aside class="sidebar" aria-label="Lesson navigation">
+  <aside class="sidebar" id="sidebar" aria-label="Lesson navigation">
     <div class="sb-brand">
+      <!-- Close button only shown on mobile when drawer is open -->
+      <button
+        class="sb-drawer-close"
+        id="sb-drawer-close"
+        onclick="closeDrawer()"
+        aria-label="Close navigation menu"
+        style="display:none; position:absolute; top:14px; right:14px; background:none; border:none; color:#888; font-size:20px; cursor:pointer; padding:4px; border-radius:4px; line-height:1;"
+      >✕</button>
       <div class="sb-brand-row">
         <div class="sb-brand-mark" aria-hidden="true" style="background:#FFFFFF;border-radius:6px;padding:2px;"><img src="favicon.png" alt="wA11y Academy logo" width="32" style="border-radius:6px;display:block;"></div>
         <div class="sb-brand-name">wA11y</div>
@@ -1482,72 +1802,45 @@ body.pref-reduced-motion .ai-low-energy-note { display: block; }
           the system is working, even at simulated latency
       -->
       <!-- AI Welcome (role-adaptive) -->
-      <!--
-        AI LEARNING ASSISTANT
-        ─────────────────────────────────────────────────────────
-        Design intent: The AI assistant is scoped to the lesson — it
-        doesn't wander into general chat. Its purpose is to reduce the
-        cognitive cost of switching between reading and doing.
-
-        Collapse behaviour: learners can minimise the panel to a single
-        compact bar once they've oriented, freeing vertical space for
-        lesson content without losing quick access to the assistant.
-
-        Action set: 4 clear, non-overlapping intents —
-          Explain simply · Show example · Generate code · Summarize
-        One row, no duplicates, easy to scan.
-      -->
-      <div class="ai-welcome" id="ai-welcome" aria-label="AI Learning Assistant">
-
-        <!-- Always-visible header row -->
+      <div class="ai-welcome" id="ai-welcome" aria-label="AI Learning Assistant introduction">
         <div class="ai-welcome-header">
           <div class="ai-avatar" aria-hidden="true">✦</div>
           <div class="ai-welcome-meta">
             <div class="ai-name">AI Learning Assistant</div>
             <div class="ai-status">● Active · Lesson-scoped</div>
           </div>
-          <button
-            class="ai-collapse-btn"
-            id="ai-collapse-btn"
-            onclick="toggleAiPanel()"
-            aria-expanded="true"
-            aria-controls="ai-panel-body"
-            aria-label="Collapse AI Learning Assistant"
-            title="Collapse panel"
-          >⌃</button>
         </div>
-
-        <!-- Collapsible body -->
-        <div class="ai-body" id="ai-panel-body">
-          <div class="ai-welcome-msg" id="ai-welcome-msg">
-            <!-- filled by JS based on selected role -->
-          </div>
-
-          <!-- 4 primary actions — consolidated, no duplicates -->
-          <div class="ai-actions" role="group" aria-label="AI actions">
-            <button class="ai-action-btn" onclick="aiAct('explain')" aria-label="Explain this simply">
-              💬 Explain simply <span class="kbd-hint">Alt+E</span>
-            </button>
-            <button class="ai-action-btn" onclick="aiAct('example')" aria-label="Show a real-world example">
-              💡 Show example <span class="kbd-hint">Alt+X</span>
-            </button>
-            <button class="ai-action-btn" onclick="aiAct('code')" aria-label="Generate accessible code">
-              💻 Generate code <span class="kbd-hint">Alt+C</span>
-            </button>
-            <button class="ai-action-btn" onclick="aiAct('summarize')" aria-label="Summarize this section">
-              📋 Summarize <span class="kbd-hint">Alt+S</span>
-            </button>
-          </div>
-
-          <!-- Shown when Reduce Distractions pref is enabled -->
-          <div class="ai-low-energy-note" role="note" aria-live="polite">
-            ⚡ Low-energy mode — responses will be shorter and easier to scan.
-          </div>
+        <div class="ai-welcome-msg" id="ai-welcome-msg">
+          <!-- filled by JS -->
         </div>
-
+        <div class="ai-caps-list" aria-label="Assistant capabilities">
+          <span class="ai-cap">💬 Explain differently</span>
+          <span class="ai-cap">📋 Summarize content</span>
+          <span class="ai-cap">💡 Generate examples</span>
+          <span class="ai-cap">💻 Create code snippets</span>
+        </div>
+        <!-- Suggested prompts — clickable shortcuts to common AI actions -->
+        <div class="ai-suggested" role="group" aria-label="Suggested prompts">
+          <button class="ai-suggestion-btn" onclick="aiAct('explain')">Explain this simply</button>
+          <button class="ai-suggestion-btn" onclick="aiAct('example')">Show real-world example</button>
+          <button class="ai-suggestion-btn" onclick="aiAct('code')">Generate accessible code</button>
+          <button class="ai-suggestion-btn" onclick="aiAct('summarize')">Summarize for my team</button>
+        </div>
+        <!-- Shown when Reduce Distractions is enabled -->
+        <div class="ai-low-energy-note" role="note" aria-live="polite">
+          ⚡ Low-energy mode — responses will be shorter and easier to scan.
+        </div>
       </div>
 
-      <!-- AI Response area — sits between panel and lesson content -->
+      <!-- AI Action Bar -->
+      <div class="ai-bar" role="toolbar" aria-label="AI learning tools">
+        <button class="ai-action-btn" onclick="aiAct('explain')" aria-label="Explain this section differently">💬 Explain differently <span class="kbd-hint">Alt+E</span></button>
+        <button class="ai-action-btn" onclick="aiAct('summarize')" aria-label="Summarize this section">📋 Summarize <span class="kbd-hint">Alt+S</span></button>
+        <button class="ai-action-btn" onclick="aiAct('example')" aria-label="Show a real-world example">💡 Show example <span class="kbd-hint">Alt+X</span></button>
+        <button class="ai-action-btn" onclick="aiAct('code')" aria-label="Generate code snippet">💻 Generate code <span class="kbd-hint">Alt+C</span></button>
+      </div>
+
+      <!-- AI Response -->
       <div class="ai-response" id="ai-box" aria-live="polite">
         <div class="ai-resp-header">✦ AI Response</div>
         <div class="ai-resp-body" id="ai-text"></div>
@@ -1701,6 +1994,48 @@ var role = 'designer';
 var section = 0;
 var visited = new Set([0]);
 var prefsPanelOpen = false;
+var drawerOpen = false;
+
+/* ════════════════════════════════════════════════════════
+   MOBILE DRAWER
+   ─────────────────────────────────────────────────────────
+   The sidebar becomes a slide-in drawer on mobile.
+   It is hidden off-screen by default and revealed by the
+   hamburger button in the sticky top bar.
+   Overlay click and Escape key both close it.
+════════════════════════════════════════════════════════ */
+function openDrawer() {
+  drawerOpen = true;
+  var sidebar   = document.getElementById('sidebar');
+  var overlay   = document.getElementById('drawer-overlay');
+  var menuBtn   = document.getElementById('mobile-menu-btn');
+  var closeBtn  = document.getElementById('sb-drawer-close');
+  if (sidebar)  sidebar.classList.add('drawer-open');
+  if (overlay)  overlay.classList.add('open');
+  if (menuBtn)  menuBtn.setAttribute('aria-expanded','true');
+  if (closeBtn) closeBtn.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  // Move focus into drawer for accessibility
+  if (sidebar) {
+    var first = sidebar.querySelector('button, [tabindex="0"]');
+    if (first) setTimeout(function(){ first.focus(); }, 50);
+  }
+}
+
+function closeDrawer() {
+  drawerOpen = false;
+  var sidebar   = document.getElementById('sidebar');
+  var overlay   = document.getElementById('drawer-overlay');
+  var menuBtn   = document.getElementById('mobile-menu-btn');
+  var closeBtn  = document.getElementById('sb-drawer-close');
+  if (sidebar)  sidebar.classList.remove('drawer-open');
+  if (overlay)  overlay.classList.remove('open');
+  if (menuBtn)  menuBtn.setAttribute('aria-expanded','false');
+  if (closeBtn) closeBtn.style.display = 'none';
+  document.body.style.overflow = '';
+  // Return focus to hamburger button
+  if (menuBtn) menuBtn.focus();
+}
 
 /* ════════════════════════════════════════════════════════
    ROLE CONFIG
@@ -1843,6 +2178,12 @@ function startLesson() {
   // Update mode badge
   document.getElementById('mode-badge').textContent = modeBadges[obMode] || modeBadges.guided;
 
+  // Sync mobile progress bar to initial state
+  var mobilePbar = document.getElementById('mobile-pbar');
+  var mobilePct  = document.getElementById('mobile-pct');
+  if (mobilePbar) mobilePbar.style.width = '20%';
+  if (mobilePct)  mobilePct.textContent  = '20%';
+
   // Update role badge
   document.getElementById('role-badge').textContent = roles[role].icon + ' ' + roles[role].label;
 
@@ -1880,18 +2221,8 @@ function setRole(r, btn) {
   // Update badge
   document.getElementById('role-badge').textContent = roles[r].icon + ' ' + roles[r].label;
 
-  // Update AI welcome — also re-expand panel so new message is visible
+  // Update AI welcome
   renderAiWelcome();
-  var panel = document.getElementById('ai-welcome');
-  var colBtn = document.getElementById('ai-collapse-btn');
-  if (panel && panel.classList.contains('collapsed')) {
-    panel.classList.remove('collapsed');
-    if (colBtn) {
-      colBtn.setAttribute('aria-expanded','true');
-      colBtn.setAttribute('aria-label','Collapse AI Learning Assistant');
-      colBtn.textContent = '⌃';
-    }
-  }
 
   // Update intro role block
   renderIntroRoleBlock();
@@ -1901,6 +2232,9 @@ function setRole(r, btn) {
 
   // Clear AI response
   document.getElementById('ai-box').classList.remove('show');
+
+  // Auto-close drawer on mobile after selecting a role
+  if (drawerOpen) closeDrawer();
 }
 
 function renderIntroRoleBlock() {
@@ -1965,6 +2299,15 @@ function goSection(idx) {
   section = idx;
   document.getElementById('ai-box').classList.remove('show');
   document.querySelector('.main').scrollTop = 0;
+
+  // Sync mobile progress bar
+  var mobilePbar = document.getElementById('mobile-pbar');
+  var mobilePct  = document.getElementById('mobile-pct');
+  if (mobilePbar) mobilePbar.style.width = pct + '%';
+  if (mobilePct)  mobilePct.textContent  = pct + '%';
+
+  // Auto-close drawer on mobile after selecting a section
+  if (drawerOpen) closeDrawer();
 
   if (idx === 2) renderDeepDive();
 }
@@ -2120,29 +2463,6 @@ function toggleChk(el) {
 /* ════════════════════════════════════════════════════════
    KEYBOARD SHORTCUTS (when kbd hints enabled)
 ════════════════════════════════════════════════════════ */
-/* ════════════════════════════════════════════════════════
-   AI PANEL — COLLAPSE / EXPAND
-   ─────────────────────────────────────────────────────────
-   The panel is expanded by default. Clicking the chevron
-   collapses the body via max-height + opacity transition,
-   reducing visual weight while keeping the header (and
-   therefore the assistant's identity) always visible.
-
-   aria-expanded on the toggle button communicates state to
-   assistive technology. The chevron flips: ⌃ = expanded,
-   ⌄ = collapsed.
-════════════════════════════════════════════════════════ */
-function toggleAiPanel() {
-  var panel = document.getElementById('ai-welcome');
-  var btn   = document.getElementById('ai-collapse-btn');
-  var isCollapsed = panel.classList.toggle('collapsed');
-
-  btn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
-  btn.setAttribute('aria-label', isCollapsed ? 'Expand AI Learning Assistant' : 'Collapse AI Learning Assistant');
-  btn.setAttribute('title',      isCollapsed ? 'Expand panel' : 'Collapse panel');
-  btn.textContent = isCollapsed ? '⌄' : '⌃';
-}
-
 document.addEventListener('keydown', function(e) {
   if (e.altKey) {
     if (e.key === 'e' || e.key === 'E') { e.preventDefault(); aiAct('explain'); }
@@ -2152,7 +2472,8 @@ document.addEventListener('keydown', function(e) {
   }
   if (e.key === 'Escape') {
     var modal = document.getElementById('checklist-modal');
-    if (modal && modal.classList.contains('open')) closeChecklist();
+    if (modal && modal.classList.contains('open')) { closeChecklist(); return; }
+    if (drawerOpen) closeDrawer();
   }
 });
 
@@ -2232,6 +2553,10 @@ function restartLesson() {
   visited = new Set([0]);
   document.getElementById('pbar').style.width = '20%';
   document.getElementById('pct').textContent = '20%';
+  var mp = document.getElementById('mobile-pbar');
+  var mc = document.getElementById('mobile-pct');
+  if (mp) mp.style.width = '20%';
+  if (mc) mc.textContent = '20%';
 
   document.querySelectorAll('.sb-nav-item').forEach(function(n) {
     n.classList.remove('active','done');
